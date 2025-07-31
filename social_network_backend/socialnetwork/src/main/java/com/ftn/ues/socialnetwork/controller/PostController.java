@@ -41,7 +41,8 @@ public class PostController {
     @PostMapping
     public ResponseEntity<PostDTO> addPost(@RequestBody PostDTO postDTO) {
         Post post = postService.addPost(postDTO);
-        indexingService.indexPost(postDTO);
+        PostDTO postDtoToIndex = modelMapper.map(post, PostDTO.class);
+        indexingService.indexPost(postDtoToIndex);
 
         PostDTO responseDTO = modelMapper.map(post, PostDTO.class);
         return ResponseEntity.ok(responseDTO);
@@ -60,6 +61,18 @@ public class PostController {
                 .map(post -> modelMapper.map(post, PostDTO.class))
                 .collect(Collectors.toList());
         return ResponseEntity.ok(postDTOS);
+    }
+
+    @GetMapping("/all-group")
+    public ResponseEntity<List<PostDTO>> getAllFromGroup(@RequestParam Long id) {
+        List<PostDTO> posts = postService.getPostsGroup(id);
+        return ResponseEntity.ok(posts);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PostDTO> getById(@PathVariable Long id) {
+        PostDTO post = postService.getPost(id);
+        return ResponseEntity.ok(post);
     }
 
     @GetMapping("/all-names")

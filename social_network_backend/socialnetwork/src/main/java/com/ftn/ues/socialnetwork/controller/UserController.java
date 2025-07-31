@@ -1,5 +1,6 @@
 package com.ftn.ues.socialnetwork.controller;
 
+import com.ftn.ues.socialnetwork.contract.LoginRequest;
 import com.ftn.ues.socialnetwork.contract.UserAdditionDTO;
 import com.ftn.ues.socialnetwork.contract.UserDTO;
 import com.ftn.ues.socialnetwork.model.User;
@@ -8,6 +9,7 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,5 +52,16 @@ public class UserController {
                 .map(user -> modelMapper.map(user, UserDTO.class))
                 .collect(Collectors.toList());
         return ResponseEntity.ok(userDTOS);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+        UserDTO userDTO = userService.getUserByUsername(loginRequest.getUsername());
+
+        if (userDTO == null || !userDTO.getPassword().equals(loginRequest.getPassword())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Pogresni kredencijali!");
+        }
+
+        return ResponseEntity.ok(userDTO);
     }
 }

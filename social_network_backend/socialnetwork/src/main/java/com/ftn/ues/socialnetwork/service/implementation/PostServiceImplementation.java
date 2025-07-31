@@ -147,4 +147,55 @@ public class PostServiceImplementation implements PostService {
             return Collections.emptyList();
         }
     }
+
+    @Override
+    public List<PostDTO> getPostsGroup(Long id){
+        Optional<Group> groupOpt = groupRepository.findById(id);
+
+        if (groupOpt.isEmpty()) {
+            throw new RuntimeException("Group not found with id: " + id);
+        }
+
+        Set<Post> posts = groupOpt.get().getPosts();
+
+        return posts.stream()
+                .map(post -> modelMapper.map(post, PostDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public PostDTO getPost(Long id) {
+        Optional<Post> postOptional = postRepository.findById(id);
+        if (postOptional.isEmpty()) {
+            throw new RuntimeException("Post not found with id: " + id);
+        }
+
+        Post post = postOptional.get();
+        return mapToDTO(post);
+    }
+
+    private PostDTO mapToDTO(Post post) {
+        PostDTO dto = new PostDTO();
+        dto.setId(post.getId());
+        dto.setContent(post.getContent());
+        dto.setCreationDate(post.getCreationDate());
+        dto.setUserId(post.getUser().getId());
+        dto.setGroupId(post.getGroup().getId());
+
+        Set<ReactionDTO> reactionDTOs = post.getReactions()
+                .stream()
+                .map(reaction -> {
+                    ReactionDTO rDto = new ReactionDTO();
+                    rDto.setId(reaction.getId());
+                    rDto.setReactionType(reaction.getReactionType());
+                    rDto.setUserId(reaction.getUser().getId());
+                    rDto.setPostId(post.getId());
+                    rDto.setCreatedAt(reaction.getCreatedAt());
+                    return rDto;
+                })
+                .collect(Collectors.toSet());
+
+        dto.setReactions(reactionDTOs);
+        return dto;
+    }
 }

@@ -1,9 +1,6 @@
 package com.ftn.ues.socialnetwork.service.implementation;
 
-import com.ftn.ues.socialnetwork.contract.GroupDTO;
-import com.ftn.ues.socialnetwork.contract.PostDTO;
-import com.ftn.ues.socialnetwork.contract.ReactionDTO;
-import com.ftn.ues.socialnetwork.contract.UserAdditionDTO;
+import com.ftn.ues.socialnetwork.contract.*;
 import com.ftn.ues.socialnetwork.infrastructure.repository.UserRepository;
 import com.ftn.ues.socialnetwork.model.Group;
 import com.ftn.ues.socialnetwork.model.Post;
@@ -92,6 +89,28 @@ public class UserServiceImplementation implements UserService {
         return userRepository.findAll().stream()
                 .filter(user -> !user.isDeleted())
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public UserDTO getUserByUsername(String username) {
+        Optional<User> user = userRepository.findByUsername(username);
+
+        return user.map(this::mapToDTO)
+                .orElseThrow(() -> new RuntimeException("Korisnik nije pronadjen: " + username));
+    }
+
+    private UserDTO mapToDTO(User user) {
+        UserDTO dto = new UserDTO();
+        dto.setId(user.getId());
+        dto.setEmail(user.getEmail());
+        dto.setPassword(user.getPassword());
+        dto.setName(user.getName());
+        dto.setSurname(user.getSurname());
+        dto.setDescription(user.getDescription());
+        dto.setUsername(user.getUsername());
+        dto.setLastLogin(user.getLastLogin());
+        dto.setDisplayName(user.getDisplayName());
+        return dto;
     }
 
     @Override

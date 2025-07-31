@@ -1,9 +1,6 @@
 package com.ftn.ues.socialnetwork.controller;
 
-import com.ftn.ues.socialnetwork.contract.GroupDTO;
-import com.ftn.ues.socialnetwork.contract.GroupDisplayDTO;
-import com.ftn.ues.socialnetwork.contract.GroupDocument;
-import com.ftn.ues.socialnetwork.contract.PostDocument;
+import com.ftn.ues.socialnetwork.contract.*;
 import com.ftn.ues.socialnetwork.model.Group;
 import com.ftn.ues.socialnetwork.service.GroupService;
 import com.ftn.ues.socialnetwork.service.IndexingService;
@@ -39,9 +36,10 @@ public class GroupController {
     @PostMapping
     public ResponseEntity<GroupDTO> addGroup(@RequestBody GroupDTO groupDTO) {
         Group group = groupService.addGroup(groupDTO);
-        indexingService.indexGroup(groupDTO);
 
         GroupDTO responseDTO = modelMapper.map(group, GroupDTO.class);
+        indexingService.indexGroup(responseDTO);
+
         return ResponseEntity.ok(responseDTO);
     }
 
@@ -51,6 +49,7 @@ public class GroupController {
         return ResponseEntity.noContent().build();
     }
 
+
     @GetMapping("/all")
     public ResponseEntity<List<GroupDisplayDTO>> getAll() {
         List<Group> groups = groupService.getAllGroups().stream()
@@ -59,6 +58,13 @@ public class GroupController {
         List<GroupDisplayDTO> groupDisplayDTOS = groups.stream()
                 .map(group -> modelMapper.map(group, GroupDisplayDTO.class))
                 .collect(Collectors.toList());
+        return ResponseEntity.ok(groupDisplayDTOS);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<GroupDisplayDTO> getById(@PathVariable Long id) {
+        GroupDTO group = groupService.getGroupById(id);
+        GroupDisplayDTO groupDisplayDTOS = modelMapper.map(group, GroupDisplayDTO.class);
         return ResponseEntity.ok(groupDisplayDTOS);
     }
 

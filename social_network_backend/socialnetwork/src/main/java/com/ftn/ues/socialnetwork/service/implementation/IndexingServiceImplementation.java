@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,7 +33,9 @@ public class IndexingServiceImplementation implements IndexingService {
             Set<ReactionDocument> reactionDocs = post.getReactions().stream()
                     .map(reaction -> ReactionDocument.builder()
                             .id(reaction.getId())
-                            .createdAt(reaction.getCreatedAt())
+                            .createdAt(reaction.getCreatedAt()!= null
+                                    ? reaction.getCreatedAt().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+                                    : null)
                             .userId(reaction.getUserId())
                             .reactionType(reaction.getReactionType())
                             .postId(post.getId())
@@ -42,7 +45,9 @@ public class IndexingServiceImplementation implements IndexingService {
             PostDocument doc = PostDocument.builder()
                     .id(post.getId())
                     .content(post.getContent())
-                    .creationDate(post.getCreationDate())
+                    .creationDate(post.getCreationDate() != null
+                            ? post.getCreationDate().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+                            : null)
                     .userId(post.getUserId())
                     .groupId(post.getGroupId())
                     .reactions(reactionDocs)
@@ -60,12 +65,42 @@ public class IndexingServiceImplementation implements IndexingService {
 
     public void indexGroup(GroupDTO group) {
         try {
+            Set<PostDocument> postDocs = group.getPosts().stream()
+                    .map(post -> {
+                        Set<ReactionDocument> reactionDocs = post.getReactions().stream()
+                                .map(reaction -> ReactionDocument.builder()
+                                        .id(reaction.getId())
+                                        .createdAt(reaction.getCreatedAt() != null
+                                                ? reaction.getCreatedAt().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+                                                : null)
+                                        .userId(reaction.getUserId())
+                                        .reactionType(reaction.getReactionType())
+                                        .postId(post.getId())
+                                        .build())
+                                .collect(Collectors.toSet());
+
+                        return PostDocument.builder()
+                                .id(post.getId())
+                                .content(post.getContent())
+                                .creationDate(post.getCreationDate() != null
+                                        ? post.getCreationDate().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+                                        : null)
+                                .userId(post.getUserId())
+                                .groupId(post.getGroupId())
+                                .reactions(reactionDocs)
+                                .build();
+                    })
+                    .collect(Collectors.toSet());
+
             GroupDocument doc = GroupDocument.builder()
                     .id(group.getId())
                     .name(group.getName())
                     .description(group.getDescription())
-                    .createdAt(group.getCreatedAt())
+                    .createdAt(group.getCreatedAt() != null
+                            ? group.getCreatedAt().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+                            : null)
                     .adminId(group.getAdminId())
+                    .posts(postDocs)
                     .build();
 
             elasticsearchClient.index(i -> i
@@ -77,4 +112,5 @@ public class IndexingServiceImplementation implements IndexingService {
             e.printStackTrace();
         }
     }
+
 }

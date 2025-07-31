@@ -19,4 +19,6 @@ public interface GroupService {
     List<Group> searchGroupsByDescription(String description);
 
     List<GroupDocument> searchGroupsByNameOrDescription(String queryText);
+
+    GroupDTO getGroupById(Long Id);
 }

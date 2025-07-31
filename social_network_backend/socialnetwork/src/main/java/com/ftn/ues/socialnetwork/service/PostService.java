@@ -18,4 +18,8 @@ public interface PostService {
     List<Post> searchPostsByContent(String keyword);
 
     List<PostDocument> searchPostsByText(String queryText);
+
+    List<PostDTO> getPostsGroup(Long id);
+
+    PostDTO getPost(Long id);
 }

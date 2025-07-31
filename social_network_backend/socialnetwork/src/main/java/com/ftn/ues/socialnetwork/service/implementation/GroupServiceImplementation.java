@@ -5,6 +5,7 @@ import co.elastic.clients.elasticsearch.core.SearchResponse;
 import com.ftn.ues.socialnetwork.contract.GroupDTO;
 import com.ftn.ues.socialnetwork.contract.GroupDocument;
 import com.ftn.ues.socialnetwork.contract.PostDTO;
+import com.ftn.ues.socialnetwork.contract.ReactionDTO;
 import com.ftn.ues.socialnetwork.infrastructure.repository.GroupRepository;
 import com.ftn.ues.socialnetwork.infrastructure.repository.UserRepository;
 import com.ftn.ues.socialnetwork.model.Group;
@@ -137,5 +138,58 @@ public class GroupServiceImplementation implements GroupService {
             e.printStackTrace();
             return Collections.emptyList();
         }
+    }
+
+    @Override
+    public GroupDTO getGroupById(Long id) {
+        Optional<Group> groupOptional = groupRepository.findById(id);
+        if (groupOptional.isEmpty()) {
+            throw new RuntimeException("Group not found with id: " + id);
+        }
+
+        Group group = groupOptional.get();
+        return mapToDTO(group);
+    }
+
+    private GroupDTO mapToDTO(Group group) {
+        GroupDTO dto = new GroupDTO();
+        dto.setId(group.getId());
+        dto.setCreatedAt(group.getCreatedAt());
+        dto.setName(group.getName());
+        dto.setDescription(group.getDescription());
+        dto.setAdminId(group.getAdmin().getId());
+
+        Set<PostDTO> postDTOs = group.getPosts()
+                .stream()
+                .map(this::mapPostToDTO)
+                .collect(Collectors.toSet());
+
+        dto.setPosts(postDTOs);
+        return dto;
+    }
+
+    private PostDTO mapPostToDTO(Post post) {
+        PostDTO dto = new PostDTO();
+        dto.setId(post.getId());
+        dto.setContent(post.getContent());
+        dto.setCreationDate(post.getCreationDate());
+        dto.setUserId(post.getUser().getId());
+        dto.setGroupId(post.getGroup().getId());
+
+        Set<ReactionDTO> reactionDTOs = post.getReactions()
+                .stream()
+                .map(reaction -> {
+                    ReactionDTO rDto = new ReactionDTO();
+                    rDto.setId(reaction.getId());
+                    rDto.setReactionType(reaction.getReactionType());
+                    rDto.setUserId(reaction.getUser().getId());
+                    rDto.setPostId(post.getId());
+                    rDto.setCreatedAt(reaction.getCreatedAt());
+                    return rDto;
+                })
+                .collect(Collectors.toSet());
+
+        dto.setReactions(reactionDTOs);
+        return dto;
     }
 }
