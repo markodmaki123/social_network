@@ -45,7 +45,12 @@
 		<dependency>
 			<groupId>io.minio</groupId>
 			<artifactId>minio</artifactId>
-			<version>8.5.3</version>
+			<version>8.5.7</version>
+		</dependency>
+		<dependency>
+			<groupId>com.lowagie</groupId>
+			<artifactId>itext</artifactId>
+			<version>2.1.7</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -54,10 +59,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web-services</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.session</groupId>
-			<artifactId>spring-session-jdbc</artifactId>
 		</dependency>
 
 		<dependency>
@@ -80,7 +81,6 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.18.30</version>
-			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -99,6 +99,7 @@
 						<path>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
+							<version>1.18.30</version>
 						</path>
 					</annotationProcessorPaths>
 				</configuration>
@@ -111,6 +112,7 @@
 						<exclude>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
+							<version>1.18.30</version>
 						</exclude>
 					</excludes>
 				</configuration>

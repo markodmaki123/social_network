@@ -20,8 +20,8 @@ import java.util.Set;
 @ToString
 @Transactional
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@Table(name = "groups")
-@SQLDelete(sql = "UPDATE groups SET deleted = true WHERE id = ?")
+@Table(name = "`groups`")
+@SQLDelete(sql = "UPDATE `groups` SET deleted = true WHERE id = ?")
 public class Group extends BaseEntity {
 
     @Id
@@ -36,6 +36,9 @@ public class Group extends BaseEntity {
 
     @Column(name = "description", nullable = false)
     String description;
+
+    @Column(name = "file_name", nullable = false)
+    String fileName;
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     Set<Post> posts = new HashSet<>();

@@ -21,7 +21,7 @@ import java.util.Objects;
 @Transactional
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Table(name = "reactions")
-@SQLDelete(sql = "UPDATE reactions SET deleted = true WHERE id = ?")
+@SQLDelete(sql = "UPDATE `reactions` SET deleted = true WHERE id = ?")
 public class Reaction extends BaseEntity {
 
     @Id
@@ -34,6 +34,10 @@ public class Reaction extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id", nullable = false)
+    Post post;
 
     @Column(name = "reaction_type", nullable = false)
     ReactionType reactionType;

@@ -15,4 +15,5 @@ public class ReactionDTO {
     LocalDateTime createdAt;
     Long userId;
     ReactionType reactionType;
+    Long postId;
 }

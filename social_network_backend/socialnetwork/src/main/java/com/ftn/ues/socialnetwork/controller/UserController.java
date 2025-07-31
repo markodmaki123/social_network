@@ -30,13 +30,13 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> addFacility(@RequestBody UserAdditionDTO userAdditionDTO) {
+    public ResponseEntity<User> addUser(@RequestBody UserAdditionDTO userAdditionDTO) {
         User user = userService.addUser(userAdditionDTO);
         return ResponseEntity.ok(user);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> removeFacility(@PathVariable Long id) {
+    public ResponseEntity<Void> removeUser(@PathVariable Long id) {
         userService.removeUser(id);
         return ResponseEntity.noContent().build();
     }

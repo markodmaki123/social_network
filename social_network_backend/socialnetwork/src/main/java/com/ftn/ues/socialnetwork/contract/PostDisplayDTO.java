@@ -12,12 +12,12 @@ import java.util.Set;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PostDTO {
+public class PostDisplayDTO {
 
     Long id;
     LocalDateTime creationDate;
     String content;
-    Long userId;
+    String userName;
     Long groupId;
     Set<ReactionDTO> reactions = new HashSet<>();
 }

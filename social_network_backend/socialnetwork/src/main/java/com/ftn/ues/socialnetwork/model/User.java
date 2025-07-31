@@ -21,7 +21,7 @@ import java.util.Set;
 @ToString
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Table(name = "users")
-@SQLDelete(sql = "UPDATE users SET deleted = true WHERE id = ?")
+@SQLDelete(sql = "UPDATE `users` SET deleted = true WHERE id = ?")
 public class User extends BaseEntity {
 
     @Id
