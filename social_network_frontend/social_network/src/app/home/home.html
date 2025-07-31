@@ -1,0 +1,35 @@
+<div class="home-container">
+
+  <div *ngIf="!isLoggedIn" class="login-form">
+    <h2>Prijava</h2>
+    <input [(ngModel)]="email" placeholder="Email" />
+    <input [(ngModel)]="password" placeholder="Lozinka" type="password" />
+    <button (click)="login()">Prijavi se</button>
+
+    <p *ngIf="loginFailed" class="error">Pogrešan email ili lozinka.</p>
+  </div>
+
+  <div *ngIf="isLoggedIn" class="home-content">
+    <div class="top-bar">
+      <span>Dobrodošao, {{ user?.name }}</span>
+      <button class="logout-button" (click)="logout()">Odjava</button>
+    </div>
+
+    <div class="action-buttons">
+      <button (click)="addGroup()">Dodaj grupu</button>
+      <button (click)="searchPosts()">Pretraži objave</button>
+      <button (click)="searchGroups()">Pretraži grupe</button>
+    </div>
+
+    <div class="group-list">
+      <h3>Grupe</h3>
+      <ul>
+        <li *ngFor="let group of groups" (click)="goToGroup(group.id)">
+          {{ group.name }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+

@@ -1,0 +1,11 @@
+<div *ngFor="let post of posts" class="post-card">
+  <p>{{ post.content }}</p>
+  <small>{{ post.creationDate }}</small>
+
+  <div class="reaction-buttons">
+    <button (click)="react(post.id, 'LIKE')">👍 Like</button>
+    <button (click)="react(post.id, 'DISLIKE')">👎 Dislike</button>
+    <button (click)="react(post.id, 'HEART')">❤️ Heart</button>
+    <span class="score">Score: {{ getScore(post) }}</span>
+  </div>
+</div>

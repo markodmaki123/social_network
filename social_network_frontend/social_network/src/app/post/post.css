@@ -1,0 +1,18 @@
+.post-card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 1em;
+  margin-bottom: 1em;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.reaction-buttons {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+}
+
+.score {
+  font-weight: bold;
+  color: #333;
+}

@@ -1,0 +1,109 @@
+.group-details {
+  max-width: 700px;
+  margin: 40px auto 20px;
+  padding: 25px 30px;
+  background: #1e1e1e;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.8);
+  color: #e0e0e0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+}
+
+.home-container {
+  min-height: 100vh;
+  background: #121212; 
+  color: #e0e0e0; 
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+}
+
+.group-details h2 {
+  font-weight: 700;
+  margin-bottom: 18px;
+  color: #00aaff;
+}
+
+.group-details p {
+  margin: 8px 0;
+  font-size: 16px;
+}
+
+.add-post-button {
+  margin: 12px 8px 0;
+  padding: 10px 24px;
+  background-color: #00aaff;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: inherit;
+}
+
+.add-post-button:hover {
+  background-color: #008ecc;
+}
+
+hr {
+  margin: 30px auto;
+  border: 0;
+  border-top: 1px solid #333;
+  max-width: 90%;
+}
+
+.group-posts {
+  max-width: 700px;
+  margin: 0 auto 50px;
+  color: #ddd;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.group-posts h3 {
+  font-weight: 700;
+  color: #00aaff;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.post-card {
+  background: #292929;
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin-bottom: 18px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  text-align: left;
+}
+
+.post-card h4 {
+  margin: 0 0 12px;
+  color: #00aaff;
+  font-weight: 700;
+}
+
+.post-card p {
+  margin: 6px 0;
+  font-size: 15px;
+  color: #ccc;
+}
+
+.post-card button {
+  margin-right: 12px;
+  margin-top: 12px;
+  background-color: #222;
+  color: #eee;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+.post-card button:hover {
+  background-color: #00aaff;
+  color: #000;
+}

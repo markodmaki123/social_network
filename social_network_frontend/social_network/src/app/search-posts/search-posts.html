@@ -1,0 +1,30 @@
+<div class="home-container">
+  <div class="search-container">
+    <form (ngSubmit)="onSearch()" #searchForm="ngForm" class="search-form">
+      <label for="searchType">Tip pretrage:</label>
+      <select id="searchType" [(ngModel)]="searchType" name="searchType" required>
+        <option value="content">Pretraga po sadržaju</option>
+        <option value="file">Pretraga po datoteci</option>
+      </select>
+
+      <input type="text" [(ngModel)]="keyword" name="keyword" placeholder="Unesite pojam za pretragu" required />
+
+      <button type="submit" [disabled]="searchForm.invalid">Pretraži</button>
+
+      <button (click)="goBack()" class="add-post-button">Nazad</button>
+    </form>
+
+    <div class="results" *ngIf="posts.length > 0">
+      <h3>Rezultati pretrage:</h3>
+      <div *ngFor="let post of posts" class="post-card">
+        <p><strong>Sadržaj:</strong> {{ post.content }}</p>
+        <p><strong>Kreirao:</strong> {{ post.userName || post.userId }}</p>
+        <p><strong>Datum:</strong> {{ post.creationDate | date:'short' }}</p>
+        <p><strong>Grupa:</strong> {{ post.groupId }}</p>
+        <hr>
+      </div>
+    </div>
+
+    <p *ngIf="posts.length === 0 && searched">Nema rezultata za dati pojam.</p>
+  </div>
+</div>

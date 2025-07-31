@@ -1,0 +1,17 @@
+export const API_ROUTES = {
+  login: 'http://localhost:8080/api/user/login',
+  get_groups: 'http://localhost:8080/api/group/all',
+  get_posts: 'http://localhost:8080/api/post/all',
+  get_posts_names: 'http://localhost:8080/api/post/all-names',
+  get_group_by_name : 'http://localhost:8080/api/group/search-by-name',
+  get_group_by_desc : 'http://localhost:8080/api/group/search-by-description',
+  get_post_by_content : 'http://localhost:8080/api/post/search',
+  get_group_elastic : 'http://localhost:8080/api/group/search-content',
+  get_post_elastic : 'http://localhost:8080/api/post/search-content',
+  add_group : 'http://localhost:8080/api/group',
+  add_post : 'http://localhost:8080/api/post',
+  add_reaction :'http://localhost:8080/api/reaction',
+  get_posts_by_group: 'http://localhost:8080/api/post/all-group',
+  get_group_by_id : 'http://localhost:8080/api/group',
+  get_post_by_id : 'http://localhost:8080/api/post',
+};

@@ -1,0 +1,26 @@
+<div class="home-container">
+  <div class="group-details">
+    <h2>{{ group?.name }}</h2>
+    <p><strong>Opis:</strong> {{ group?.description }}</p>
+    <p><strong>Broj objava:</strong> {{ posts.length }}</p>
+    <p><strong>Prosečan broj lajkova:</strong> {{ avgLikes | number: '1.0-2' }}</p>
+
+    <button (click)="goToAddPost()" class="add-post-button">Dodaj post</button>
+    <button (click)="goBack()" class="add-post-button">Nazad</button>
+  </div>
+
+  <hr>
+
+  <div class="group-posts">
+    <h3>Objave</h3>
+    <div *ngFor="let post of posts" class="post-card">
+      <h4>{{ post.title || 'Bez naslova' }}</h4>
+      <p>{{ post.content }}</p>
+      <p><strong>Broj reakcija:</strong> {{ post.reactions?.length || 0 }}</p>
+
+      <button (click)="react(post.id, 'LIKE')">👍 Like</button>
+      <button (click)="react(post.id, 'DISLIKE')">👎 Dislike</button>
+      <button (click)="react(post.id, 'HEART')">❤️ Heart</button>
+    </div>
+  </div>
+</div>

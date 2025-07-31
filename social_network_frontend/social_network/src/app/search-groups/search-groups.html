@@ -1,0 +1,35 @@
+<div class="home-container">
+  <div class="search-container">
+    <h2>Pretraga grupa</h2>
+
+    <div class="search-form">
+      <label for="searchType">Pretražuj po:</label>
+      <select id="searchType" [(ngModel)]="searchType">
+        <option value="name">Imenu</option>
+        <option value="description">Opisu</option>
+        <option value="content">Datoteci (Elasticsearch)</option>
+      </select>
+
+      <input type="text" [(ngModel)]="keyword" placeholder="Unesite ključnu reč" />
+
+      <button (click)="search()">Pretraži</button>
+      <button (click)="goBack()" class="back-button">Nazad</button>
+    </div>
+
+    <div *ngIf="loading">Učitavanje...</div>
+    <div *ngIf="error" class="error">{{ error }}</div>
+
+    <div *ngIf="groups.length > 0" class="results">
+      <h3>Rezultati pretrage</h3>
+      <ul>
+        <li *ngFor="let group of groups" class="post-card">
+          <strong>{{ group.name }}</strong> - {{ group.description || group.fileName }}
+        </li>
+      </ul>
+    </div>
+
+    <div *ngIf="!loading && groups.length === 0 && keyword.trim() !== ''">
+      Nema rezultata za vašu pretragu.
+    </div>
+  </div>
+</div>

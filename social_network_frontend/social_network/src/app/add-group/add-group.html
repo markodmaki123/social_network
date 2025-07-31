@@ -1,0 +1,21 @@
+<div class="home-container">
+  <div class="form-container">
+    <h2>Dodaj grupu</h2>
+
+    <form (ngSubmit)="submitGroup()">
+      <div>
+        <label for="name">Naziv grupe</label>
+        <input [(ngModel)]="name" name="name" required />
+      </div>
+
+      <div>
+        <label for="description">Opis grupe</label>
+        <textarea [(ngModel)]="description" name="description" required></textarea>
+      </div>
+
+      <button type="submit">Dodaj grupu</button>
+    </form>
+
+    <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+  </div>
+</div>

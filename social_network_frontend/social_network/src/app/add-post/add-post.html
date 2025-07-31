@@ -1,0 +1,10 @@
+<div class="home-container">
+  <div class="add-post-container">
+    <h2>Dodaj novi post</h2>
+    <form (ngSubmit)="submitPost()">
+      <label for="content">Sadržaj:</label>
+      <textarea id="content" [(ngModel)]="content" name="content" required></textarea>
+      <button type="submit">Dodaj</button>
+    </form>
+  </div>
+</div>
