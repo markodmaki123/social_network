@@ -45,7 +45,7 @@ public class UserServiceImplementation implements UserService {
         user.setDescription(userAdditionDTO.getDescription());
         user.setUsername(userAdditionDTO.getUsername());
         user.setLastLogin(userAdditionDTO.getLastLogin());
-        user.setDisplayName(user.getDisplayName());
+        user.setDisplayName(userAdditionDTO.getDisplayName());
         user.setSurname(userAdditionDTO.getSurname());
 
         Set<Post> posts = new HashSet<>();

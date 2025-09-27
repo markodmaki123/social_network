@@ -32,9 +32,10 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> addUser(@RequestBody UserAdditionDTO userAdditionDTO) {
+    public ResponseEntity<UserDTO> addUser(@RequestBody UserAdditionDTO userAdditionDTO) {
         User user = userService.addUser(userAdditionDTO);
-        return ResponseEntity.ok(user);
+        UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+        return ResponseEntity.ok(userDTO);
     }
 
     @DeleteMapping("/{id}")
